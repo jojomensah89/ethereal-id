@@ -4,7 +4,7 @@ pragma solidity ^0.8.24;
 // Uncomment this line to use console.log
 import "hardhat/console.sol";
 
-contract etherealId {
+contract EtherealId {
    struct User{
     string firstName;
     string lastName;
@@ -129,10 +129,41 @@ function getUserByUsername(string memory _username) public view usernameExists(_
  professinalInfo = ProgramminalInfo(user.education,user.workHistory,user.jobTitle,user.info,user.skills,user.imageURL);
  socialInfo = SocialInfo(user.x,user.instagram,user.youtube,user.linkedin);
  visibility = user.visibility;
+return (basicInfo, professionalInfo, socialInfo, visibility);
+
 
 }
 
+function  getUserByAddress(address  _userAdress) public view  returns(BasicInfo memory basicInfo,ProfessinalInfo memory professinalInfo,SocialInfo memory socialInfo, Visibility memory visibility){
+    string memory username = addressToUsername[_userAdress];
+    return getUserByUsername(username);
+}
 
+function getUsernameByAddress(address _userAdress) public view returns(string memory){
+    return addressToUsername[_userAdress];
+
+}
+
+  function setVisibility(
+        string memory _username, 
+        bool _education,
+        bool _workHistory,
+        bool _phoneNumber,
+        bool _homeAddress,
+        bool _dateOfBirth
+    ) public  usernameExists(_username){
+        User storage user = usernameToUser[username];
+        user.visibility.education = education;
+        user.visibility.workHistory = workHistory;
+        user.visibility.phoneNumber = phoneNumber;
+        user.visibility.homeAddress = homeAddress;
+        user.visibility.dateOfBirth = dateOfBirth;
+    }
+
+    function getVisibility(string memory _username) public view usernameExists(_username) returns (Visibility memory) {
+      
+        return usernameToUser[_username].visibility;
+    }
 
 
 
